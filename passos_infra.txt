@@ -1,0 +1,79 @@
+# SCRIPT 
+
+-- Já sou usuário linux, então para realizar a atividade eu criei uma pasta dentro dos meus documentos
+(caminho flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$)
+
+-- Primeiro: CRIAR DIRETÓRIOS executado para criar um diretório
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ mkdir -p publico adm ven sec
+- Retorno
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ ls
+adm  publico  sec  ven
+
+-- Segundo: CRIAR GRUPOS 
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ sudo groupadd GPR_ADM
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ sudo groupadd GPR_VEN
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ sudo groupadd GPR_SEC
+
+-- Terceiro: VALIDAR SE OS GRUPOS FORAM CRIADOS
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ cat /etc/group |grep GPR_
+GPR_ADM:x:1002:
+GPR_VEN:x:1003:
+GPR_SEC:x:1004:
+
+-- Quarto: Criando os usuários dentro de cada grupo 
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ sudo useradd -m -s /bin/bash -G GPR_ADM Carlos
+sudo useradd -m -s /bin/bash -G GPR_ADM Maria
+sudo useradd -m -s /bin/bash -G GPR_ADM Joao
+[sudo] senha para flavia: 
+
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ sudo useradd -m -s /bin/bash -G GPR_VEN Debora
+sudo useradd -m -s /bin/bash -G GPR_VEN Sebastiana
+sudo useradd -m -s /bin/bash -G GPR_VEN Roberto
+
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ sudo useradd -m -s /bin/bash -G GPR_SEC Josefina
+sudo useradd -m -s /bin/bash -G GPR_SEC Amanda
+sudo useradd -m -s /bin/bash -G GPR_SEC Rogerio
+
+-- Quinto: conferindo se os usuários foram criados e atribuidos corretamente 
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ cat /etc/passwd | grep -E "Carlos|Maria|Joao|Debora|Sebastiana|Roberto|Josefina|Amanda|Rogerio"
+Carlos:x:1002:1005::/home/Carlos:/bin/bash
+Maria:x:1003:1006::/home/Maria:/bin/bash
+Joao:x:1004:1007::/home/Joao:/bin/bash
+Debora:x:1005:1008::/home/Debora:/bin/bash
+Sebastiana:x:1006:1009::/home/Sebastiana:/bin/bash
+Roberto:x:1007:1010::/home/Roberto:/bin/bash
+Josefina:x:1008:1011::/home/Josefina:/bin/bash
+Amanda:x:1009:1012::/home/Amanda:/bin/bash
+Rogerio:x:1010:1013::/home/Rogerio:/bin/bash
+
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ groups Carlos Maria Joao Debora Sebastiana Roberto Josefina Amanda Rogerio
+Carlos : Carlos GPR_ADM
+Maria : Maria GPR_ADM
+Joao : Joao GPR_ADM
+Debora : Debora GPR_VEN
+Sebastiana : Sebastiana GPR_VEN
+Roberto : Roberto GPR_VEN
+Josefina : Josefina GPR_SEC
+Amanda : Amanda GPR_SEC
+Rogerio : Rogerio GPR_SEC
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ 
+
+-- Sexto: Definindo permissão no publico 
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ sudo chmod 777 "/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/publico"
+
+-- Sétimo: Definindo permissão em cada grupo
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ sudo chown :GPR_ADM "/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/adm"
+sudo chmod 770 "/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/adm"
+
+sudo chown :GPR_VEN "/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/ven"
+sudo chmod 770 "/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/ven"
+
+sudo chown :GPR_SEC "/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/sec"
+sudo chmod 770 "/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/sec"
+
+-- Oitavo: Verificando as permissões
+flavia@Trabalho:~/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1$ ls -ld "/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1"/*
+drwxrwx--- 2 root GPR_ADM 4096 mar 31 14:26 '/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/adm'
+drwxrwxrwx 2 root root    4096 mar 31 14:20 '/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/publico'
+drwxrwx--- 2 root GPR_SEC 4096 mar 31 14:26 '/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/sec'
+drwxrwx--- 2 root GPR_VEN 4096 mar 31 14:26 '/home/flavia/Documentos/Aulas/DIO/Atividades Bootcamp Linux/1/ven'
